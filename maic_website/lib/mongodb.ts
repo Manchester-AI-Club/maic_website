@@ -4,6 +4,12 @@ const clientOptions = { serverApi: { version: '1', strict: true, deprecationErro
 
 let isConnected = false;
 
+// MONGODB_URI=mongodb+srv://root:root@maic.vwba1ra.mongodb.net/?appName=MAIC
+
+// add this URi in your .env.local file
+
+// remove it once done
+
 export async function connectToDatabase() {
   if (isConnected) {
     return mongoose.connection;

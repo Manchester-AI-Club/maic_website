@@ -35,7 +35,7 @@ export default function Footer() {
           </div>
 
           {/* Social Icons - Bottom Left */}
-          <div className="absolute bottom-0 left-0 flex gap-6 text-2xl pl-4">
+          <div className="text-gray-400 absolute bottom-0 left-0 flex gap-6 text-2xl pl-4">
             <a
               href="https://www.linkedin.com/company/manchester-artificial-intelligence-club/"
               target="_blank"

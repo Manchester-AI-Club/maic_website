@@ -17,14 +17,14 @@ export default function Hero() {
               <h1 className="font-kode font-bold text-2xl md:text-5xl lg:text-6xl bg-gradient-to-r from-white from-10% to-[#791E94] to-80% bg-clip-text text-transparent mb-4 ">
                 Learn. Build. Innovate. Together.
               </h1>
-              <p className="mt-10 text-neutral-300 text-lg md:text-xl font-mono max-w-lg">
+              <p className="mt-10 md:mt-15 text-neutral-300 text-lg md:text-xl font-mono max-w-lg">
                 [Desc] Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Quisque ut gravida elit, ac porta nisi.
               </p>
             </div>
 
             {/* Social Icons - Bottom Left */}
-            <div className="flex gap-6 mt-10 text-2xl md:text-3xl md:gap-10">
+            <div className="flex mt-10 gap-6  text-2xl md:text-3xl md:gap-10 md:mb-30">
               <a
                 href="https://www.linkedin.com/company/manchester-artificial-intelligence-club/"
                 target="_blank"

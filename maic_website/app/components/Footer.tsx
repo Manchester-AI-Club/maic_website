@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="w-full border-t border-neutral-700 py-4 md:py-6 text-white">
       <div className="max-w-7xl mx-auto">
         {/* Desktop Layout */}
-        <div className="hidden md:block relative min-h-[150px]">
+        <div className="hidden md:block relative min-h-[130px]">
           {/* Navigation Links - Two Columns */}
           <div className="flex justify-center gap-80">
             {/* Left column */}
@@ -71,7 +71,7 @@ export default function Footer() {
           </div>
 
           {/* Copyright - Bottom Center */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center text-sm font-kode font-medium md:text-md">
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center text-sm font-mono font-medium md:text-md">
             Copyright © 2025 Manchester AI Club
           </div>
         </div>

@@ -9,28 +9,32 @@ export default function Nav() {
     <nav className="flex items-center justify-between py-3 px-6 border-b border-neutral-700 text-white text-sm bg-black relative">
       {/* Logo */}
       <div className="flex items-center gap-2">
-        <img src="/logo.jpg" alt="MAIC Logo" className="h-12 w-12" />
-        <span className="font-kode font-bold tracking-wide text-sm md:text-lg">
-          Manchester AI Club
-        </span>
+        <a href="/">
+          <img src="/logo.jpg" alt="MAIC Logo" className="h-12 w-12" />
+        </a>
+        <a href="/">
+          <span className="font-kode font-bold tracking-wide text-sm md:text-lg">
+            Manchester AI Club
+          </span>
+        </a>
       </div>
 
       {/* Desktop Menu */}
       <div className="hidden md:flex items-center gap-8">
         <a
-          href="#about"
+          href="/about"
           className="text-lg font-kode font-medium hover:text-purple-400 transition"
         >
           About Us
         </a>
         <a
-          href="#projects"
+          href="/projects"
           className="text-lg font-kode font-medium hover:text-purple-400 transition"
         >
           Projects
         </a>
         <a
-          href="#events"
+          href="/events"
           className="text-lg font-kode font-medium hover:text-purple-400 transition"
         >
           Events
@@ -87,7 +91,7 @@ export default function Nav() {
           </button>
         </div>
         <a
-          href="#about"
+          href="/about"
           className="text-base font-kode font-medium hover:text-purple-400 transition"
           onClick={() => setIsOpen(false)}
         >

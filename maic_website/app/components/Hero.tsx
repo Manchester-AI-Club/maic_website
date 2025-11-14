@@ -24,13 +24,13 @@ export default function Hero() {
             </div>
 
             {/* Social Icons - Bottom Left */}
-            <div className="flex mt-10 gap-6  text-2xl md:text-3xl md:gap-10 md:mb-30">
+            <div className="flex mt-10 gap-6  text-2xl md:text-3xl md:gap-10 lg:text-3xl lg:gap-10 md:mb-30">
               <a
                 href="https://www.linkedin.com/company/manchester-artificial-intelligence-club/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="hover:text-purple-400 transition"
+                className="hover:text-purple-400 transition text-white"
               >
                 <FaLinkedin />
               </a>
@@ -39,21 +39,21 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="hover:text-purple-400 transition"
+                className="hover:text-purple-400 transition text-white"
               >
                 <FaInstagram />
               </a>
               <a
                 href="#discord"
                 aria-label="Discord"
-                className="hover:text-purple-400 transition"
+                className="hover:text-purple-400 transition text-white"
               >
                 <FaDiscord />
               </a>
               <a
                 href="https://linktr.ee/manchester_ai_club"
                 aria-label="Linktree"
-                className="hover:text-purple-400 transition"
+                className="hover:text-purple-400 transition text-white"
               >
                 <TbBrandLinktree />
               </a>

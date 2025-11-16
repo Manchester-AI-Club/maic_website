@@ -165,44 +165,105 @@ export default function Nav() {
 
       {/* Announcements Modal */}
       {showAnnouncements && (
-        <div className="fixed inset-0 flex items-center justify-center ">
+        <div className="fixed inset-0 flex items-center justify-center z-50">
           {/* Modal Backdrop */}
           <div
-            className="absolute inset-0 bg-black/60"
+            className="absolute inset-0 bg-black/70 backdrop-blur-[2px]"
             onClick={() => setShowAnnouncements(false)}
           ></div>
+
           {/* Modal Content */}
-          <div className="w-[90%] max-w-sm  md:max-w-lg  lg:max-w-2xl relative bg-neutral-900 rounded-xl shadow-2xl p-8  mx-auto flex flex-col gap-6 border border-purple-400">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold text-[#C5A3FF] font-kode">
+          <div
+            className="relative w-[92%] max-w-sm md:max-w-lg lg:max-w-2xl 
+                 bg-black rounded-2xl shadow-xl border border-purple-300/40 
+                 p-6 md:p-8 mx-auto flex flex-col gap-6"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl md:text-3xl lg:text-[2.2rem] font-bold text-purple-300 font-kode drop-shadow">
                 Announcements 🔊
               </h2>
+
               <button
                 onClick={() => setShowAnnouncements(false)}
-                className="text-white text-2xl leading-none cursor-pointer"
+                className="text-white text-2xl md:text-3xl lg:text-[2.2rem] hover:text-purple-300 transition cursor-pointer"
                 aria-label="Close announcements"
               >
                 ✕
               </button>
             </div>
-            <div className="flex flex-col gap-4">
-              <div className="bg-neutral-800 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-white mb-2">
+
+            {/* Divider */}
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-purple-300/40 to-transparent"></div>
+
+            {/* Cards */}
+            <div className="flex flex-col gap-5">
+              {/* Announcement Card */}
+              <div
+                className="bg-neutral-900 border border-neutral-700/70 rounded-xl p-5 
+                        shadow-lg hover:shadow-purple-300/20 transition-all duration-300 
+                        hover:border-purple-300/40 group"
+              >
+                <h3 className="text-lg md:text-xl lg:text-[1.3rem] font-semibold text-white mb-2 font-mono">
                   Placeholder Announcement 1
                 </h3>
-                <p className="text-sm text-neutral-300">
+
+                <p className="font-mono text-sm md:text-base lg:text-[0.95rem] text-neutral-300 leading-relaxed mb-4">
                   This is the first placeholder announcement. Details will go
                   here.
                 </p>
+
+                <div className="flex justify-end">
+                  <a
+                    href="https://example.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono font-medium bg-purple-300 text-black 
+                         border border-purple-300 rounded-full 
+                         text-xs md:text-sm lg:text-[0.8rem]
+                         px-4 md:px-6 py-1 
+                         transition-all duration-200 
+                         hover:bg-purple-200 hover:border-purple-200 
+                         hover:shadow-[0_0_10px_rgba(197,163,255,0.5)] hover:-translate-y-0.5 
+                         cursor-pointer"
+                  >
+                    Brand
+                  </a>
+                </div>
               </div>
-              <div className="bg-neutral-800 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-white mb-2">
+
+              {/* Announcement Card 2 */}
+              <div
+                className="bg-neutral-900 border border-neutral-700/70 rounded-xl p-5 
+                        shadow-lg hover:shadow-purple-300/20 transition-all duration-300 
+                        hover:border-purple-300/40 group"
+              >
+                <h3 className="text-lg md:text-xl lg:text-[1.3rem] font-semibold text-white mb-2 font-mono">
                   Placeholder Announcement 2
                 </h3>
-                <p className="text-sm text-neutral-300">
-                  This is the second placeholder announcement. More info coming
-                  soon.
+
+                <p className="font-mono text-sm md:text-base lg:text-[0.95rem] text-neutral-300 leading-relaxed mb-4">
+                  This is the second placeholder announcement. Details will go
+                  here.
                 </p>
+
+                <div className="flex justify-end">
+                  <a
+                    href="https://example.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono font-medium bg-purple-300 text-black 
+                         border border-purple-300 rounded-full 
+                         text-xs md:text-sm lg:text-[0.8rem]
+                         px-4 md:px-6 py-1 
+                         transition-all duration-200 
+                         hover:bg-purple-200 hover:border-purple-200 
+                         hover:shadow-[0_0_10px_rgba(197,163,255,0.5)] hover:-translate-y-0.5 
+                         cursor-pointer"
+                  >
+                    Brand
+                  </a>
+                </div>
               </div>
             </div>
           </div>

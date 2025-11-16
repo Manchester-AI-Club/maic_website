@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showAnnouncements, setShowAnnouncements] = useState(false);
 
   return (
     <nav className="flex items-center justify-between py-3 px-6 border-b border-neutral-700 text-white text-sm bg-black relative">
@@ -21,6 +22,13 @@ export default function Nav() {
 
       {/* Desktop Menu */}
       <div className="hidden md:flex items-center gap-8">
+        <button
+          type="button"
+          className="text-lg font-kode hover:text-white transition bg-purple-400 px-3 py-1 rounded-lg text-black font-bold cursor-pointer"
+          onClick={() => setShowAnnouncements(true)}
+        >
+          Announcements
+        </button>
         <a
           href="/about"
           className="text-lg font-kode font-medium hover:text-purple-400 transition"
@@ -90,6 +98,16 @@ export default function Nav() {
             ✕
           </button>
         </div>
+        <button
+          type="button"
+          className="text-base font-kode font-medium hover:text-purple-400 transition text-left"
+          onClick={() => {
+            setShowAnnouncements(true);
+            setIsOpen(false);
+          }}
+        >
+          Announcements
+        </button>
         <a
           href="/about"
           className="text-base font-kode font-medium hover:text-purple-400 transition"
@@ -98,14 +116,14 @@ export default function Nav() {
           About Us
         </a>
         <a
-          href="#projects"
+          href="/projects"
           className="text-base font-kode font-medium hover:text-purple-400 transition"
           onClick={() => setIsOpen(false)}
         >
           Projects
         </a>
         <a
-          href="#events"
+          href="/events"
           className="text-base font-kode font-medium hover:text-purple-400 transition"
           onClick={() => setIsOpen(false)}
         >
@@ -137,12 +155,58 @@ export default function Nav() {
         </a>
       </div>
 
-      {/* Backdrop */}
+      {/* Backdrop for mobile menu */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40"
           onClick={() => setIsOpen(false)}
         ></div>
+      )}
+
+      {/* Announcements Modal */}
+      {showAnnouncements && (
+        <div className="fixed inset-0 flex items-center justify-center ">
+          {/* Modal Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => setShowAnnouncements(false)}
+          ></div>
+          {/* Modal Content */}
+          <div className="w-[90%] max-w-sm  md:max-w-lg  lg:max-w-2xl relative bg-neutral-900 rounded-xl shadow-2xl p-8  mx-auto flex flex-col gap-6 border border-purple-400">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-bold text-[#C5A3FF] font-kode">
+                Announcements 🔊
+              </h2>
+              <button
+                onClick={() => setShowAnnouncements(false)}
+                className="text-white text-2xl leading-none cursor-pointer"
+                aria-label="Close announcements"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="bg-neutral-800 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  Placeholder Announcement 1
+                </h3>
+                <p className="text-sm text-neutral-300">
+                  This is the first placeholder announcement. Details will go
+                  here.
+                </p>
+              </div>
+              <div className="bg-neutral-800 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  Placeholder Announcement 2
+                </h3>
+                <p className="text-sm text-neutral-300">
+                  This is the second placeholder announcement. More info coming
+                  soon.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </nav>
   );

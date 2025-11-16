@@ -7,31 +7,31 @@ export default function Footer() {
     <footer className="w-full border-t border-neutral-700 py-4 md:py-6 text-white">
       <div className="max-w-7xl mx-auto">
         {/* Desktop Layout */}
-        <div className="hidden md:block relative min-h-[130px]">
+        <div className="hidden md:block relative min-h-[100px]">
           {/* Navigation Links - Two Columns */}
-          <div className="flex justify-center gap-80">
+          <div className="flex justify-center flex gap-15 lg:gap-30 text-2xl pl-4  text-sm font-kode md:text-lg font-light">
             {/* Left column */}
-            <div className="flex flex-col gap-6 text-sm font-kode md:text-lg font-light">
-              <a href="#about" className="hover:text-purple-400 transition">
-                About Us
-              </a>
-              <a href="#projects" className="hover:text-purple-400 transition">
-                Projects
-              </a>
-            </div>
+            {/* <div className="flex flex-col gap-6 text-sm font-kode md:text-lg font-light"> */}
+            <a href="#about" className="hover:text-purple-400 transition">
+              About Us
+            </a>
+            <a href="#projects" className="hover:text-purple-400 transition">
+              Projects
+            </a>
+            {/* </div> */}
 
             {/* Right column */}
-            <div className="flex flex-col gap-6 text-sm font-kode md:text-lg font-light">
-              <a href="#events" className="hover:text-purple-400 transition">
-                Events
-              </a>
-              <a
-                href="https://manchesterstudentsunion.com/activities/view/Manchester_AI_Club"
-                className="hover:text-purple-400 transition"
-              >
-                Students' Union
-              </a>
-            </div>
+            {/* <div className="flex flex-col gap-6 text-sm font-kode md:text-lg font-light"> */}
+            <a href="#events" className="hover:text-purple-400 transition">
+              Events
+            </a>
+            <a
+              href="https://manchesterstudentsunion.com/activities/view/Manchester_AI_Club"
+              className="hover:text-purple-400 transition"
+            >
+              Students' Union
+            </a>
+            {/* </div> */}
           </div>
 
           {/* Social Icons - Bottom Left */}

@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Nav() {
+  const pathname = usePathname(); // get current path
   const [isOpen, setIsOpen] = useState(false);
   const [showAnnouncements, setShowAnnouncements] = useState(false);
 
@@ -30,8 +32,14 @@ export default function Nav() {
     },
   ];
 
+  // Helper function for active link styling
+  const getLinkClass = (href) =>
+    `text-lg font-kode font-medium transition ${
+      pathname === href ? "text-purple-400 font-bold" : "hover:text-purple-400"
+    }`;
+
   return (
-    <nav className="flex items-center justify-between py-3 px-6 border-b border-neutral-700 text-white text-sm bg-black relative">
+    <nav className="sticky top-0 z-50 flex items-center justify-between py-3 px-6 border-b border-neutral-700 text-white text-sm bg-black relative">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <a href="/">
@@ -53,22 +61,13 @@ export default function Nav() {
         >
           Announcements
         </button>
-        <a
-          href="/about"
-          className="text-lg font-kode font-medium hover:text-purple-400 transition"
-        >
+        <a href="/about" className={getLinkClass("/about")}>
           About Us
         </a>
-        <a
-          href="/projects"
-          className="text-lg font-kode font-medium hover:text-purple-400 transition"
-        >
+        <a href="/projects" className={getLinkClass("/projects")}>
           Projects
         </a>
-        <a
-          href="/events"
-          className="text-lg font-kode font-medium hover:text-purple-400 transition"
-        >
+        <a href="/events" className={getLinkClass("/events")}>
           Events
         </a>
         <a
@@ -122,7 +121,7 @@ export default function Nav() {
         </div>
 
         <button
-          className="text-base font-kode font-medium hover:text-purple-400 transition"
+          className="text-lg font-kode hover:text-white transition bg-purple-400  py-0.5 rounded-lg text-black font-bold cursor-pointer"
           onClick={() => {
             setShowAnnouncements(true);
             setIsOpen(false);
@@ -134,21 +133,21 @@ export default function Nav() {
         <a
           href="/about"
           onClick={() => setIsOpen(false)}
-          className="text-base font-kode font-medium hover:text-purple-400 transition"
+          className={getLinkClass("/about") + " text-base"}
         >
           About Us
         </a>
         <a
           href="/projects"
           onClick={() => setIsOpen(false)}
-          className="text-base font-kode font-medium hover:text-purple-400 transition"
+          className={getLinkClass("/projects") + " text-base"}
         >
           Projects
         </a>
         <a
           href="/events"
           onClick={() => setIsOpen(false)}
-          className="text-base font-kode font-medium hover:text-purple-400 transition"
+          className={getLinkClass("/events") + " text-base"}
         >
           Events
         </a>
@@ -186,12 +185,7 @@ export default function Nav() {
           ></div>
 
           {/* Modal Content */}
-          <div
-            className="relative w-[92%] max-w-sm md:max-w-lg lg:max-w-2xl 
-        bg-black rounded-2xl shadow-xl border border-purple-300/40 
-        p-0 mx-auto flex flex-col 
-        max-h-[80vh] overflow-hidden"
-          >
+          <div className="relative w-[92%] max-w-sm md:max-w-lg lg:max-w-2xl bg-black rounded-2xl shadow-xl border border-purple-300/40 p-0 mx-auto flex flex-col max-h-[80vh] overflow-hidden">
             {/* Sticky Header */}
             <div className="sticky top-0 z-10 bg-black pb-4 px-6 pt-6 md:px-8">
               <div className="flex items-center justify-between">
@@ -215,9 +209,7 @@ export default function Nav() {
                 {announcement_cards.map((card) => (
                   <div
                     key={card.id}
-                    className="bg-neutral-900 border border-neutral-700/70 rounded-xl p-5 
-                   shadow-lg hover:shadow-purple-300/20 transition-all duration-300 
-                   hover:border-purple-300/40"
+                    className="bg-neutral-900 border border-neutral-700/70 rounded-xl p-5 shadow-lg hover:shadow-purple-300/20 transition-all duration-300 hover:border-purple-300/40"
                   >
                     <h3 className="text-lg md:text-xl font-semibold text-white mb-2 font-mono">
                       {card.title}
@@ -233,10 +225,7 @@ export default function Nav() {
                           href={card.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-mono font-medium bg-purple-300 text-black 
-                          border border-purple-300 rounded-full 
-                          text-xs md:text-sm px-4 py-1 
-                          transition-all hover:bg-purple-200 hover:border-purple-200"
+                          className="font-mono font-medium bg-purple-300 text-black border border-purple-300 rounded-full text-xs md:text-sm px-4 py-1 transition-all hover:bg-purple-200 hover:border-purple-200"
                         >
                           {card.url_text}
                         </a>

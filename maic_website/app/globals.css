@@ -55,3 +55,32 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #cba6f7 #1a1a1a; /* thumb | track */
 }
+
+
+/* Global Purple Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(180, 120, 255, 0.5);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  border: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 150, 255, 0.7);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(180,120,255,0.5) rgba(255,255,255,0.05);
+}

@@ -170,8 +170,8 @@ export default function MaicPolygonAnimation() {
         vertices[i3 + 2] += (data.basePos.z - vertices[i3 + 2]) * 0.02;
 
         // Mouse influence
-        const dx = mouse.x * 20 - vertices[i3];
-        const dy = mouse.y * 20 - vertices[i3 + 1];
+        const dx = mouse.x * 30 - vertices[i3];
+        const dy = mouse.y * 30 - vertices[i3 + 1];
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < 15) {
           const force = (15 - dist) / 15;

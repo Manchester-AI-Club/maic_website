@@ -1,43 +1,46 @@
-import mongoose from 'mongoose';
+import { MongoClient, ServerApiVersion, Db } from 'mongodb';
 
-const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
+const uri = process.env.MONGODB_URI!;
 
-let isConnected = false;
+const clientOptions = {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+  maxPoolSize: 10,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+};
 
-// MONGODB_URI=mongodb+srv://root:root@maic.vwba1ra.mongodb.net/?appName=MAIC
+let cached = global.mongodb;
 
-// add this URi in your .env.local file
+if (!cached) {
+  cached = global.mongodb = { client: null, promise: null };
+}
 
-// remove it once done
+export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db }> {
+  if (cached.client) {
+    return { client: cached.client, db: cached.client.db() };
+  }
 
-export async function connectToDatabase() {
-  if (isConnected) {
-    return mongoose.connection;
+  if (!cached.promise) {
+    cached.promise = MongoClient.connect(uri, clientOptions);
   }
 
   try {
-    const mongoUri = process.env.MONGODB_URI;
-    if (!mongoUri) {
-      throw new Error('MONGODB_URI environment variable is not defined');
-    }
-    
-    await mongoose.connect(mongoUri, clientOptions);
-    isConnected = true;
-    console.log("Successfully connected to MongoDB!");
-    
-    mongoose.connection.on('disconnected', () => {
-      isConnected = false;
-      console.log('MongoDB disconnected');
-    });
-    
-    return mongoose.connection;
-  } catch (error) {
-    console.error("Failed to connect to MongoDB:", error);
-    throw error;
+    cached.client = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
   }
+
+  return { client: cached.client, db: cached.client.db() };
 }
 
-// Initialize connection on module load
-if (typeof window === 'undefined') {
-  connectToDatabase().catch(console.error);
+declare global {
+  var mongodb: {
+    client: MongoClient | null;
+    promise: Promise<MongoClient> | null;
+  };
 }

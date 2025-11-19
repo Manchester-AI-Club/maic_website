@@ -8,6 +8,17 @@ export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [showAnnouncements, setShowAnnouncements] = useState(false);
 
+  // Show announcements popup automatically on first visit to main page
+  React.useEffect(() => {
+    if (pathname === "/" && typeof window !== "undefined") {
+      // Only show once per session
+      if (!window.sessionStorage.getItem("maic_announcements_shown")) {
+        setShowAnnouncements(true);
+        window.sessionStorage.setItem("maic_announcements_shown", "true");
+      }
+    }
+  }, [pathname]);
+
   const announcement_cards = [
     {
       id: 1,
@@ -114,7 +125,7 @@ export default function Nav() {
           <img src="/logo.jpg" className="h-10 w-10" />
           <button
             onClick={() => setIsOpen(false)}
-            className="text-white text-2xl"
+            className="text-white text-2xl cursor-pointer hover:text-purple-300 transition"
           >
             ✕
           </button>
@@ -195,7 +206,7 @@ export default function Nav() {
 
                 <button
                   onClick={() => setShowAnnouncements(false)}
-                  className="text-white text-2xl md:text-3xl hover:text-purple-300 transition"
+                  className="text-white text-2xl md:text-3xl cursor-pointer hover:text-purple-300 transition"
                 >
                   ✕
                 </button>

@@ -40,7 +40,7 @@ const eventsData = [
   {
     id: 4,
     name: "Event Name",
-    date: "Nov 1",
+    date: "Nov 22",
     day: "Saturday",
     time: "5:00 PM",
     location: "Kilburn",
@@ -50,7 +50,7 @@ const eventsData = [
   {
     id: 5,
     name: "Event Name",
-    date: "Nov 1",
+    date: "Nov 29",
     day: "Saturday",
     time: "5:00 PM",
     location: "Kilburn",
@@ -60,7 +60,7 @@ const eventsData = [
   {
     id: 6,
     name: "Event Name",
-    date: "Nov 1",
+    date: "Dec 6",
     day: "Saturday",
     time: "5:00 PM",
     location: "Kilburn",
@@ -78,33 +78,40 @@ export default function Events() {
       <main className="flex-1 px-4 md:px-8 lg:px-16 py-8 md:py-12">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-center font-kode font-bold md:mt-10 text-2xl md:text-4xl lg:text-5xl bg-gradient-to-r from-white from-20% to-[#791E94] to-70% bg-clip-text text-transparent">
+          <h1 className="text-center font-kode font-bold md:mt-10 text-2xl md:text-4xl lg:text-5xl bg-gradient-to-r from-white from-23% to-[#791E94] to-70% bg-clip-text text-transparent">
             Upcoming Events
           </h1>
         </div>
 
         {/* View Toggle */}
-        <div className="mb-8">
-          <div className="inline-flex border border-[#C5A3FF] rounded-full overflow-hidden">
+        <div className="mb-8 flex w-full justify-start">
+          <div className="inline-flex items-center border border-[#C5A3FF] rounded-full overflow-hidden shadow-sm">
+            {/* List Button */}
             <button
               onClick={() => setIsGridView(false)}
-              className={`p-3 px-5 transition-all text-[#C5A3FF] ${
-                !isGridView
-                  ? "bg-[#C5A3FF] text-black"
-                  : "hover:bg-gray-800 hover:cursor-pointer"
-              }`}
+              className={`flex items-center gap-2 px-4 py-2 transition-all text-[#C5A3FF] text-sm 
+        ${
+          !isGridView
+            ? "bg-[#C5A3FF] text-black"
+            : "hover:bg-[#1a1a1a] hover:cursor-pointer"
+        }`}
             >
-              <IoIosList size={25} />
+              <IoIosList size={18} />
+              <span className="hidden sm:inline">List</span>
             </button>
+
+            {/* Grid Button */}
             <button
               onClick={() => setIsGridView(true)}
-              className={`p-3 px-5 transition-all text-[#C5A3FF] ${
-                isGridView
-                  ? "bg-[#C5A3FF] text-black"
-                  : "hover:bg-gray-800 hover:cursor-pointer"
-              }`}
+              className={`flex items-center gap-2 px-4 py-2 transition-all text-[#C5A3FF] text-sm 
+        ${
+          isGridView
+            ? "bg-[#C5A3FF] text-black"
+            : "hover:bg-[#1a1a1a] hover:cursor-pointer"
+        }`}
             >
-              <IoGridOutline size={20} />
+              <IoGridOutline size={16} />
+              <span className="hidden sm:inline">Grid</span>
             </button>
           </div>
         </div>
@@ -166,45 +173,44 @@ export default function Events() {
         ) : (
           // List View
           <div className="flex justify-center">
-            <div className="space-y-6">
+            <div className="space-y-6 w-full max-w-5xl px-2 sm:px-4">
               {eventsData.map((event, index) => (
                 <div key={event.id}>
                   {/* Date Header */}
                   <div className="flex items-center mb-4">
                     <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                    <span className="ml-3 text-gray-300 font-mono font-medium">
-                      <span className="text-[#C5A3FF]"> {event.date}</span>
-                      {", "}
+                    <span className="ml-3 text-gray-300 font-mono font-medium text-sm sm:text-sm md:text-base">
+                      <span className="text-[#C5A3FF]"> {event.date}</span>{" "}
                       {event.day}
                     </span>
                   </div>
 
                   {/* Event Card */}
-                  <div className="ml-6 pl-6 border-l border-gray-800">
-                    <div className="max-w-5xl bg-[#0b0b0b] border border-[#2a2a2a] rounded-3xl shadow-[0_0_25px_#8249ff33] hover:shadow-[0_0_35px_#a473ff88] transition-all duration-500 hover:scale-[1.015] overflow-hidden shadow-lg">
+                  <div className="ml-2 sm:ml-6 pl-2 sm:pl-6 border-l border-gray-800">
+                    <div className="ml-2 w-full max-w-sm sm:max-w-2xl md:max-w-5xl bg-[#0b0b0b] border border-[#2a2a2a] rounded-3xl shadow-[0_0_25px_#8249ff33] hover:shadow-[0_0_35px_#a473ff88] transition-all duration-500 hover:scale-[1.015] overflow-hidden shadow-lg">
                       <div className="flex flex-col md:flex-row">
                         {/* Content Section */}
-                        <div className="flex-1 p-6 md:p-8">
-                          <h3 className="text-[#C5A3FF] font-mono text-2xl font-semibold mb-2">
+                        <div className="flex-1 p-4 sm:p-6 md:p-8">
+                          <h3 className="text-[#C5A3FF] font-mono text-lg sm:text-xl md:text-2xl font-semibold mb-2">
                             {event.name}
                           </h3>
-                          <p className="text-gray-400 text-sm mb-4 font-mono font-medium">
+                          <p className="text-gray-400 text-xs sm:text-sm md:text-base mb-4 font-mono font-medium">
                             Sat, {event.date} • {event.time} • {event.location}
                           </p>
-                          <p className="text-gray-500 mb-6 font-mono font-medium">
+                          <p className="text-gray-500 mb-6 font-mono font-medium text-xs sm:text-sm md:text-base">
                             {event.description}
                           </p>
-                          <button className="font-mono px-6 py-2 bg-transparent border border border-[#791E94] text-white rounded-full hover:bg-[#791E94] hover:text-white transition-colors cursor-pointer text-sm">
+                          <button className="font-mono px-4 sm:px-6 py-2 bg-transparent border border-[#791E94] text-white rounded-full hover:bg-[#791E94] hover:text-white transition-colors cursor-pointer text-xs sm:text-sm">
                             Register
                           </button>
                         </div>
 
                         {/* Image Section */}
-                        <div className="w-full md:w-64 h-48 md:h-auto bg-gray-900 flex items-center justify-center border-t md:border-t-0 md:border-l border-gray-800">
+                        <div className="w-full md:w-64 h-32 sm:h-48 md:h-auto bg-gray-900 flex items-center justify-center border-t md:border-t-0 md:border-l border-gray-800">
                           <div className="text-gray-700">
                             <svg
-                              width="64"
-                              height="64"
+                              width="48"
+                              height="48"
                               viewBox="0 0 24 24"
                               fill="none"
                               stroke="currentColor"

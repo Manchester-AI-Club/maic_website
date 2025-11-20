@@ -1,11 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "@/app/components/Nav";
 import Footer from "@/app/components/Footer";
 
+// Use the below calls for getting the data from the table
+
+// // Get any collection
+// fetch('/api/data?collection=YourCollectionName')
+
+// // Add to any collection
+// fetch('/api/data?collection=YourCollectionName', {
+//   method: 'POST',
+//   body: JSON.stringify({ field1: 'value1', field2: 'value2' })
+// })
+
+
 export default function AboutUs() {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [committeeData, setCommitteeData] = useState([]);
+
+  useEffect(() => {
+    const fetchCommittee = async () => {
+      try {
+        const response = await fetch('/api/data?collection=Committee');
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('API Error:', errorText);
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log('API result:', result);
+        if (result.success) {
+          console.log('Committee data:', result.data);
+          setCommitteeData(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching committee:', error);
+      }
+    };
+    fetchCommittee();
+  }, []);
 
   const committee_cards = [
     {
@@ -122,9 +157,15 @@ export default function AboutUs() {
 
         {/* Committee Grid */}
         <div className="flex flex-wrap justify-center gap-10 md:gap-15 mt-8 max-w-6xl">
-          {committee_cards.map((card) => (
+          {(committeeData.length > 0 ? committeeData.map(member => ({
+            _id: member._id,
+            title: member.FullName || member.title,
+            image: member.ImagePath || "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
+            subtitle: member.position || member.subtitle || "Committee Member",
+            desc: member.Description || member.desc
+          })) : committee_cards).map((card) => (
             <div
-              key={card.id}
+              key={card._id || card.id}
               className="relative w-50 h-62.5 md:w-64 md:h-80 bg-[#0b0b0b] rounded-3xl border border-[#2a2a2a] flex flex-col items-center justify-center shadow-[0_0_30px_#8e61ff33] transition-all duration-500 hover:shadow-[0_0_40px_#b58cffaa] hover:scale-[1.02] overflow-hidden"
               onMouseEnter={() => setHoveredCard(card.id)}
               onMouseLeave={() => setHoveredCard(null)}

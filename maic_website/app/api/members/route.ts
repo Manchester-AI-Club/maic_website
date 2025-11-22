@@ -45,6 +45,14 @@ export async function POST(request: Request) {
     const { client } = await connectToDatabase();
     const db = client.db('MAIC');
     
+    // Validate required fields
+    if (!body.name || !body.role) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Name and role are required' 
+      }, { status: 400 });
+    }
+    
     const result = await db.collection('members').insertOne({
       ...body,
       createdAt: new Date()
@@ -58,4 +66,3 @@ export async function POST(request: Request) {
     }, { status: 500 });
   }
 }
-

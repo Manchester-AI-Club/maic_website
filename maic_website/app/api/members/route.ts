@@ -66,3 +66,74 @@ export async function POST(request: Request) {
     }, { status: 500 });
   }
 }
+
+export async function PUT(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    
+    if (!id) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'ID parameter is required' 
+      }, { status: 400 });
+    }
+    
+    const body = await request.json();
+    const { client } = await connectToDatabase();
+    const db = client.db('MAIC');
+    
+    const result = await db.collection('members').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { ...body, updatedAt: new Date() } }
+    );
+    
+    if (result.matchedCount === 0) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Member not found' 
+      }, { status: 404 });
+    }
+    
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    
+    if (!id) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'ID parameter is required' 
+      }, { status: 400 });
+    }
+    
+    const { client } = await connectToDatabase();
+    const db = client.db('MAIC');
+    
+    const result = await db.collection('members')
+      .deleteOne({ _id: new ObjectId(id) });
+    
+    if (result.deletedCount === 0) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Member not found' 
+      }, { status: 404 });
+    }
+    
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
+  }
+}

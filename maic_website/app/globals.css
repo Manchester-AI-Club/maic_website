@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;700&display=swap');
+
 @import "tailwindcss";
 
 :root {
@@ -23,4 +25,62 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-kode {
+  font-family: 'Kode Mono', monospace;
+}
+
+/* Custom Purple Scrollbar for Announcement Modal */
+.announcement-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.announcement-scroll::-webkit-scrollbar-track {
+  background: #1a1a1a; /* dark background track */
+  border-radius: 10px;
+}
+
+.announcement-scroll::-webkit-scrollbar-thumb {
+  background: #cba6f7; /* purple thumb */
+  border-radius: 10px;
+}
+
+.announcement-scroll::-webkit-scrollbar-thumb:hover {
+  background: #d9b8ff; /* lighter purple on hover */
+}
+
+/* Firefox */
+.announcement-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cba6f7 #1a1a1a; /* thumb | track */
+}
+
+
+/* Global Purple Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(180, 120, 255, 0.5);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  border: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 150, 255, 0.7);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(180,120,255,0.5) rgba(255,255,255,0.05);
 }

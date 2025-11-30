@@ -4,16 +4,23 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 export default function MaicPolygonAnimation() {
-  const containerRef = useRef(null);
-  const sceneRef = useRef(null);
-  const cameraRef = useRef(null);
-  const rendererRef = useRef(null);
-  const particlesRef = useRef(null);
-  const linesRef = useRef(null);
-  const verticesRef = useRef(null);
-  const particleDataRef = useRef([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const animationIdRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+
+  const particlesRef = useRef<THREE.Points<THREE.BufferGeometry, THREE.PointsMaterial> | null>(null);
+  const linesRef = useRef<THREE.LineSegments | null>(null);
+
+  // Float32Array of positions
+  const verticesRef = useRef<Float32Array | null>(null);
+
+  type ParticleDatum = { velocity: THREE.Vector3; basePos: THREE.Vector3 };
+  const particleDataRef = useRef<ParticleDatum[]>([]);
+
+  const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const animationIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -102,6 +109,7 @@ export default function MaicPolygonAnimation() {
       const linePositions = [];
       const maxDistance = 15;
       const verts = verticesRef.current;
+      if (!verts) return;
 
       for (let i = 0; i < verts.length; i += 3) {
         for (let j = i + 3; j < verts.length; j += 3) {
@@ -129,7 +137,7 @@ export default function MaicPolygonAnimation() {
     createLines();
 
     // Mouse move handler
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouseRef.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
@@ -149,6 +157,9 @@ export default function MaicPolygonAnimation() {
 
       const time = Date.now() * 0.001;
       const vertices = verticesRef.current;
+      if (!vertices){
+        return;
+      }
       const particleData = particleDataRef.current;
       const mouse = mouseRef.current;
 
@@ -180,13 +191,14 @@ export default function MaicPolygonAnimation() {
         }
       }
 
-      particlesRef.current.geometry.attributes.position.needsUpdate = true;
 
-      // Update lines
-      createLines();
 
       // Rotate structure
-      particlesRef.current.rotation.y = time * 0.2;
+      if (particlesRef.current) {
+        particlesRef.current.geometry.attributes.position.needsUpdate = true;
+        particlesRef.current.rotation.y = time * 0.2;
+      }
+
       if (linesRef.current) {
         linesRef.current.rotation.y = time * 0.2;
       }

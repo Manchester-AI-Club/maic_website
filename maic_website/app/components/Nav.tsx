@@ -9,15 +9,15 @@ export default function Nav() {
   const [showAnnouncements, setShowAnnouncements] = useState(false);
 
   // Show announcements popup automatically on first visit to main page
-  React.useEffect(() => {
-    if (pathname === "/" && typeof window !== "undefined") {
-      // Only show once per session
-      if (!window.sessionStorage.getItem("maic_announcements_shown")) {
-        setShowAnnouncements(true);
-        window.sessionStorage.setItem("maic_announcements_shown", "true");
-      }
-    }
-  }, [pathname]);
+  // React.useEffect(() => {
+  //   if (pathname === "/" && typeof window !== "undefined") {
+  //     // Only show once per session
+  //     if (!window.sessionStorage.getItem("maic_announcements_shown")) {
+  //       setShowAnnouncements(true);
+  //       window.sessionStorage.setItem("maic_announcements_shown", "true");
+  //     }
+  //   }
+  // }, [pathname]);
 
   const announcement_cards = [
     {
@@ -65,22 +65,22 @@ export default function Nav() {
 
       {/* Desktop Menu */}
       <div className="hidden md:flex items-center gap-8">
-        <button
-          type="button"
-          className="text-lg font-kode hover:text-white transition bg-purple-400 px-3 py-1 rounded-lg text-black font-bold cursor-pointer"
-          onClick={() => setShowAnnouncements(true)}
-        >
-          Announcements
-        </button>
-        <a href="/about" className={getLinkClass("/about")}>
-          About Us
-        </a>
-        <a href="/projects" className={getLinkClass("/projects")}>
-          Projects
-        </a>
-        <a href="/events" className={getLinkClass("/events")}>
-          Events
-        </a>
+        {/*<button*/}
+        {/*  type="button"*/}
+        {/*  className="text-lg font-kode hover:text-white transition bg-purple-400 px-3 py-1 rounded-lg text-black font-bold cursor-pointer"*/}
+        {/*  onClick={() => setShowAnnouncements(true)}*/}
+        {/*>*/}
+        {/*  Announcements*/}
+        {/*</button>*/}
+        {/*<a href="/about" className={getLinkClass("/about")}>*/}
+        {/*  About Us*/}
+        {/*</a>*/}
+        {/*<a href="/projects" className={getLinkClass("/projects")}>*/}
+        {/*  Projects*/}
+        {/*</a>*/}
+        {/*<a href="/events" className={getLinkClass("/events")}>*/}
+        {/*  Events*/}
+        {/*</a>*/}
         <a
           href="https://manchesterstudentsunion.com/activities/view/Manchester_AI_Club"
           target="_blank"

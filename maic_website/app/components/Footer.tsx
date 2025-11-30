@@ -12,19 +12,19 @@ export default function Footer() {
           <div className="flex justify-center flex gap-15 lg:gap-30 text-2xl pl-4  text-sm font-kode md:text-lg font-light">
             {/* Left column */}
             {/* <div className="flex flex-col gap-6 text-sm font-kode md:text-lg font-light"> */}
-            <a href="#about" className="hover:text-purple-400 transition">
-              About Us
-            </a>
-            <a href="#projects" className="hover:text-purple-400 transition">
-              Projects
-            </a>
-            {/* </div> */}
+            {/*<a href="#about" className="hover:text-purple-400 transition">*/}
+            {/*  About Us*/}
+            {/*</a>*/}
+            {/*<a href="#projects" className="hover:text-purple-400 transition">*/}
+            {/*  Projects*/}
+            {/*</a>*/}
+            {/*/!* </div> *!/*/}
 
-            {/* Right column */}
-            {/* <div className="flex flex-col gap-6 text-sm font-kode md:text-lg font-light"> */}
-            <a href="#events" className="hover:text-purple-400 transition">
-              Events
-            </a>
+            {/*/!* Right column *!/*/}
+            {/*/!* <div className="flex flex-col gap-6 text-sm font-kode md:text-lg font-light"> *!/*/}
+            {/*<a href="#events" className="hover:text-purple-400 transition">*/}
+            {/*  Events*/}
+            {/*</a>*/}
             <a
               href="https://manchesterstudentsunion.com/activities/view/Manchester_AI_Club"
               className="hover:text-purple-400 transition"

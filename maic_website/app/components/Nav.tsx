@@ -44,7 +44,7 @@ export default function Nav() {
   ];
 
   // Helper function for active link styling
-  const getLinkClass = (href) =>
+  const getLinkClass = (href: string) =>
     `text-lg font-kode font-medium transition ${
       pathname === href ? "text-purple-400 font-bold" : "hover:text-purple-400"
     }`;

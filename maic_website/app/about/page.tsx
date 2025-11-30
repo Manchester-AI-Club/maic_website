@@ -16,9 +16,21 @@ import Footer from "@/app/components/Footer";
 // })
 
 
+type member ={
+  _id: number;
+  FullName: string;
+  ImagePath: string;
+  Description: string;
+  title?: string;
+  subtitle?: string;
+  position?: string;
+
+}
+
 export default function AboutUs() {
-  const [hoveredCard, setHoveredCard] = useState(null);
-  const [committeeData, setCommitteeData] = useState([]);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [committeeData, setCommitteeData] = useState<member[]>([]);
+  const [devTeamData, setDevTeamData] = useState<member[]>([]);
 
   useEffect(() => {
     const fetchCommittee = async () => {
@@ -42,9 +54,31 @@ export default function AboutUs() {
     fetchCommittee();
   }, []);
 
+  useEffect(() => {
+    const fetchDevTeam = async () => {
+      try {
+        const response = await fetch('/api/data?collection=DevTeam');
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('API Error:', errorText);
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log('API result:', result);
+        if (result.success) {
+          console.log('Dev Team data:', result.data);
+          setDevTeamData(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching dev team:', error);
+      }
+    };
+    fetchDevTeam();
+  }, []);
+
   const committee_cards = [
     {
-      id: 1,
+      _id: 1,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -52,7 +86,7 @@ export default function AboutUs() {
       desc: "[Fun fact, desc] Lorem ipsum dolor sit amet. Etiam ut mauris sit amet velit egestas. ",
     },
     {
-      id: 2,
+      _id: 2,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -60,7 +94,7 @@ export default function AboutUs() {
       desc: "A brief description about the committee member.",
     },
     {
-      id: 3,
+      _id: 3,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -68,7 +102,7 @@ export default function AboutUs() {
       desc: "A brief description about the committee member.",
     },
     {
-      id: 4,
+      _id: 4,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -76,7 +110,7 @@ export default function AboutUs() {
       desc: "A brief description about the committee member.",
     },
     {
-      id: 5,
+      _id: 5,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -84,7 +118,7 @@ export default function AboutUs() {
       desc: "A brief description about the committee member.",
     },
     {
-      id: 6,
+      _id: 6,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -95,7 +129,7 @@ export default function AboutUs() {
 
   const dev_team_cards = [
     {
-      id: 1,
+      _id: 1,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -103,7 +137,7 @@ export default function AboutUs() {
       desc: "[Fun fact, desc] Lorem ipsum dolor sit amet. Etiam ut mauris sit amet velit egestas. ",
     },
     {
-      id: 2,
+      _id: 2,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -111,7 +145,7 @@ export default function AboutUs() {
       desc: "A brief description about the committee member.",
     },
     {
-      id: 3,
+      _id: 3,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -119,7 +153,7 @@ export default function AboutUs() {
       desc: "A brief description about the committee member.",
     },
     {
-      id: 4,
+      _id: 4,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -127,7 +161,7 @@ export default function AboutUs() {
       desc: "A brief description about the committee member.",
     },
     {
-      id: 5,
+      _id: 5,
       title: "Full Name",
       image:
         "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
@@ -162,18 +196,18 @@ export default function AboutUs() {
             title: member.FullName || member.title,
             image: member.ImagePath || "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
             subtitle: member.position || member.subtitle || "Committee Member",
-            desc: member.Description || member.desc
+            desc: member.Description
           })) : committee_cards).map((card) => (
             <div
-              key={card._id || card.id}
+              key={card._id}
               className="relative w-50 h-62.5 md:w-64 md:h-80 bg-[#0b0b0b] rounded-3xl border border-[#2a2a2a] flex flex-col items-center justify-center shadow-[0_0_30px_#8e61ff33] transition-all duration-500 hover:shadow-[0_0_40px_#b58cffaa] hover:scale-[1.02] overflow-hidden"
-              onMouseEnter={() => setHoveredCard(card.id)}
+              onMouseEnter={() => setHoveredCard(card._id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
               {/* Default View */}
               <div
                 className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 ${
-                  hoveredCard === card.id ? "opacity-0" : "opacity-100"
+                  hoveredCard === card._id ? "opacity-0" : "opacity-100"
                 }`}
               >
                 <h2 className="text-[#C5A3FF] text-lg font-semibold mb-4 font-mono">
@@ -194,7 +228,7 @@ export default function AboutUs() {
               {/* Hover View */}
               <div
                 className={`cursor-pointer absolute inset-0 flex flex-col items-center justify-center p-6 transition-opacity duration-300 ${
-                  hoveredCard === card.id ? "opacity-100" : "opacity-0"
+                  hoveredCard === card._id ? "opacity-100" : "opacity-0"
                 }`}
               >
                 {/* <h2 className="text-[#C5A3FF] text-base md:text-lg font-bold mb-4 font-mono text-center">
@@ -214,17 +248,23 @@ export default function AboutUs() {
 
         {/* Dev Team Grid */}
         <div className="flex flex-wrap justify-center gap-10 md:gap-15 mt-8 max-w-6xl">
-          {dev_team_cards.map((card) => (
+          {(devTeamData.length > 0 ? devTeamData.map(member => ({
+            _id: member._id,
+            title: member.FullName || member.title,
+            image: member.ImagePath || "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
+            subtitle: member.position || member.subtitle || "Committee Member",
+            desc: member.Description
+          })) : dev_team_cards).map((card) => (
             <div
-              key={card.id}
+              key={card._id}
               className="relative w-50 h-62.5 md:w-64 md:h-80 bg-[#0b0b0b] rounded-3xl border border-[#2a2a2a] flex flex-col items-center justify-center shadow-[0_0_30px_#8e61ff33] transition-all duration-500 hover:shadow-[0_0_40px_#b58cffaa] hover:scale-[1.02] overflow-hidden"
-              onMouseEnter={() => setHoveredCard(card.id)}
+              onMouseEnter={() => setHoveredCard(card._id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
               {/* Default View */}
               <div
                 className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 ${
-                  hoveredCard === card.id ? "opacity-0" : "opacity-100"
+                  hoveredCard === card._id ? "opacity-0" : "opacity-100"
                 }`}
               >
                 <h2 className="text-[#C5A3FF] text-lg font-semibold mb-4 font-mono">
@@ -245,7 +285,7 @@ export default function AboutUs() {
               {/* Hover View */}
               <div
                 className={`cursor-pointer absolute inset-0 flex flex-col items-center justify-center p-6 transition-opacity duration-300 ${
-                  hoveredCard === card.id ? "opacity-100" : "opacity-0"
+                  hoveredCard === card._id ? "opacity-100" : "opacity-0"
                 }`}
               >
                 {/* <h2 className="text-[#C5A3FF] text-base md:text-lg font-bold mb-4 font-mono text-center">

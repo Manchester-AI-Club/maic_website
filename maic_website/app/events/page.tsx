@@ -144,7 +144,13 @@ export default function Events() {
         </div>
 
         {/* Events Display */}
-        {isGridView ? (
+        {eventsData.length === 0 ? (
+          <div className="flex justify-center items-center min-h-[200px]">
+            <p className="text-gray-400 text-lg font-mono">
+              No upcoming events
+            </p>
+          </div>
+        ) : isGridView ? (
           <div className="flex justify-center">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-20">
               {eventsData.map((event) => (

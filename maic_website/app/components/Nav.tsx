@@ -217,33 +217,39 @@ export default function Nav() {
             {/* Scrollable Body */}
             <div className="announcement-scroll overflow-y-auto px-6 md:px-8 pb-8 pt-4">
               <div className="flex flex-col gap-5">
-                {announcement_cards.map((card) => (
-                  <div
-                    key={card.id}
-                    className="bg-neutral-900 border border-neutral-700/70 rounded-xl p-5 shadow-lg hover:shadow-purple-300/20 transition-all duration-300 hover:border-purple-300/40"
-                  >
-                    <h3 className="text-lg md:text-xl font-semibold text-white mb-2 font-mono">
-                      {card.title}
-                    </h3>
-
-                    <p className="font-mono text-sm md:text-base text-neutral-300 leading-relaxed mb-4">
-                      {card.desc}
-                    </p>
-
-                    {card.url !== "null" && card.url_text !== "null" && (
-                      <div className="flex justify-end">
-                        <a
-                          href={card.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-mono font-medium bg-purple-300 text-black border border-purple-300 rounded-full text-xs md:text-sm px-4 py-1 transition-all hover:bg-purple-200 hover:border-purple-200"
-                        >
-                          {card.url_text}
-                        </a>
-                      </div>
-                    )}
+                {announcement_cards.length === 0 ? (
+                  <div className="text-center text-neutral-300 font-mono text-lg py-8">
+                    No announcements
                   </div>
-                ))}
+                ) : (
+                  announcement_cards.map((card) => (
+                    <div
+                      key={card.id}
+                      className="bg-neutral-900 border border-neutral-700/70 rounded-xl p-5 shadow-lg hover:shadow-purple-300/20 transition-all duration-300 hover:border-purple-300/40"
+                    >
+                      <h3 className="text-lg md:text-xl font-semibold text-white mb-2 font-mono">
+                        {card.title}
+                      </h3>
+
+                      <p className="font-mono text-sm md:text-base text-neutral-300 leading-relaxed mb-4">
+                        {card.desc}
+                      </p>
+
+                      {card.url !== "null" && card.url_text !== "null" && (
+                        <div className="flex justify-end">
+                          <a
+                            href={card.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-mono font-medium bg-purple-300 text-black border border-purple-300 rounded-full text-xs md:text-sm px-4 py-1 transition-all hover:bg-purple-200 hover:border-purple-200"
+                          >
+                            {card.url_text}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>

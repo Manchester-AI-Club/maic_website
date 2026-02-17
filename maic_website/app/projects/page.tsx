@@ -8,7 +8,7 @@ interface Project {
   _id: string;
   title: string;
   image?: string;
-  description: string;
+  desc: string;
   url: string;
 }
 
@@ -73,7 +73,7 @@ export default function Projects() {
                       {card.title}
                     </h2>
                     <p className="text-neutral-300 text-sm sm:text-base font-mono leading-relaxed">
-                      {card.description}
+                      {card.desc}
                     </p>
                   </div>
 

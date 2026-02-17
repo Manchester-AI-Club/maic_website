@@ -35,7 +35,7 @@ export default function AboutUs() {
   useEffect(() => {
     const fetchCommittee = async () => {
       try {
-        const response = await fetch('/api/data?collection=Committee');
+        const response = await fetch('/api/members');
         if (!response.ok) {
           const errorText = await response.text();
           console.error('API Error:', errorText);
@@ -44,8 +44,10 @@ export default function AboutUs() {
         const result = await response.json();
         console.log('API result:', result);
         if (result.success) {
-          console.log('Committee data:', result.data);
-          setCommitteeData(result.data);
+          // Filter members with position NOT 'Developer' for committee
+          const committee = result.data.filter((member: member) => member.position !== 'Developer');
+          console.log('Committee data:', committee);
+          setCommitteeData(committee);
         }
       } catch (error) {
         console.error('Error fetching committee:', error);
@@ -57,7 +59,7 @@ export default function AboutUs() {
   useEffect(() => {
     const fetchDevTeam = async () => {
       try {
-        const response = await fetch('/api/data?collection=DevTeam');
+        const response = await fetch('/api/members');
         if (!response.ok) {
           const errorText = await response.text();
           console.error('API Error:', errorText);
@@ -66,8 +68,10 @@ export default function AboutUs() {
         const result = await response.json();
         console.log('API result:', result);
         if (result.success) {
-          console.log('Dev Team data:', result.data);
-          setDevTeamData(result.data);
+          // Filter members with role 'DevTeam'
+          const devTeam = result.data.filter((member: member) => member.position === 'Developer');
+          console.log('Dev Team data:', devTeam);
+          setDevTeamData(devTeam);
         }
       } catch (error) {
         console.error('Error fetching dev team:', error);
@@ -75,100 +79,6 @@ export default function AboutUs() {
     };
     fetchDevTeam();
   }, []);
-
-  const committee_cards = [
-    {
-      _id: 1,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "[Fun fact, desc] Lorem ipsum dolor sit amet. Etiam ut mauris sit amet velit egestas. ",
-    },
-    {
-      _id: 2,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "A brief description about the committee member.",
-    },
-    {
-      _id: 3,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "A brief description about the committee member.",
-    },
-    {
-      _id: 4,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "A brief description about the committee member.",
-    },
-    {
-      _id: 5,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "A brief description about the committee member.",
-    },
-    {
-      _id: 6,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "A brief description about the committee member.",
-    },
-  ];
-
-  const dev_team_cards = [
-    {
-      _id: 1,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "[Fun fact, desc] Lorem ipsum dolor sit amet. Etiam ut mauris sit amet velit egestas. ",
-    },
-    {
-      _id: 2,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "A brief description about the committee member.",
-    },
-    {
-      _id: 3,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "A brief description about the committee member.",
-    },
-    {
-      _id: 4,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "A brief description about the committee member.",
-    },
-    {
-      _id: 5,
-      title: "Full Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      subtitle: "Committee Position",
-      desc: "A brief description about the committee member.",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-black flex flex-col">
@@ -191,13 +101,13 @@ export default function AboutUs() {
 
         {/* Committee Grid */}
         <div className="flex flex-wrap justify-center gap-10 md:gap-15 mt-8 max-w-6xl">
-          {(committeeData.length > 0 ? committeeData.map(member => ({
+          {committeeData.map(member => ({
             _id: member._id,
             title: member.FullName || member.title,
             image: member.ImagePath || "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
             subtitle: member.position || member.subtitle || "Committee Member",
             desc: member.Description
-          })) : committee_cards).map((card) => (
+          })).map((card) => (
             <div
               key={card._id}
               className="relative w-50 h-62.5 md:w-64 md:h-80 bg-[#0b0b0b] rounded-3xl border border-[#2a2a2a] flex flex-col items-center justify-center shadow-[0_0_30px_#8e61ff33] transition-all duration-500 hover:shadow-[0_0_40px_#b58cffaa] hover:scale-[1.02] overflow-hidden"
@@ -248,13 +158,13 @@ export default function AboutUs() {
 
         {/* Dev Team Grid */}
         <div className="flex flex-wrap justify-center gap-10 md:gap-15 mt-8 max-w-6xl">
-          {(devTeamData.length > 0 ? devTeamData.map(member => ({
+          {devTeamData.map(member => ({
             _id: member._id,
             title: member.FullName || member.title,
             image: member.ImagePath || "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
             subtitle: member.position || member.subtitle || "Committee Member",
             desc: member.Description
-          })) : dev_team_cards).map((card) => (
+          })).map((card) => (
             <div
               key={card._id}
               className="relative w-50 h-62.5 md:w-64 md:h-80 bg-[#0b0b0b] rounded-3xl border border-[#2a2a2a] flex flex-col items-center justify-center shadow-[0_0_30px_#8e61ff33] transition-all duration-500 hover:shadow-[0_0_40px_#b58cffaa] hover:scale-[1.02] overflow-hidden"

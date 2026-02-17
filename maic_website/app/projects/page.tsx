@@ -1,35 +1,40 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Nav from "@/app/components/Nav";
 import Footer from "@/app/components/Footer";
 import { FaGithub } from "react-icons/fa";
 
+interface Project {
+  _id: string;
+  title: string;
+  image?: string;
+  description: string;
+  url: string;
+}
+
 export default function Projects() {
-  const cards = [
-    {
-      id: 1,
-      title: "Project Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      desc: "[Project desc] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut gravida elit, ac porta nisi.",
-      url: "https://github.com/project-link",
-    },
-    {
-      id: 2,
-      title: "Project Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      desc: "[Project desc] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut gravida elit, ac porta nisi.",
-      url: "https://github.com/project-link",
-    },
-    {
-      id: 3,
-      title: "Project Name",
-      image:
-        "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400&h=300&fit=crop",
-      desc: "[Project desc] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut gravida elit, ac porta nisi.",
-      url: "https://github.com/project-link",
-    },
-  ];
+  const [cards, setCards] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('/api/projects');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        if (result.success) {
+          setCards(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   return (
     <div className="min-h-screen bg-black flex flex-col">
@@ -45,11 +50,20 @@ export default function Projects() {
         </p>
 
         {/* Cards */}
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[200px]">
+            <p className="text-neutral-400 text-lg font-mono">Loading projects...</p>
+          </div>
+        ) : cards.length === 0 ? (
+          <div className="flex justify-center items-center min-h-[200px]">
+            <p className="text-neutral-400 text-lg font-mono">No projects yet</p>
+          </div>
+        ) : (
         <div className="w-full flex justify-center">
           <div className="w-full max-w-6xl flex flex-col gap-8 my-10 px-2 sm:px-4">
             {cards.map((card) => (
               <div
-                key={card.id}
+                key={card._id}
                 className=" w-full bg-[#0b0b0b] border border-[#2a2a2a] rounded-3xl shadow-[0_0_25px_#8249ff33] hover:shadow-[0_0_45px_#a473ff88] transition-all duration-500 hover:scale-[1.015] flex flex-col-reverse md:flex-row overflow-hidden "
               >
                 {/* LEFT TEXT SECTION */}
@@ -59,7 +73,7 @@ export default function Projects() {
                       {card.title}
                     </h2>
                     <p className="text-neutral-300 text-sm sm:text-base font-mono leading-relaxed">
-                      {card.desc}
+                      {card.description}
                     </p>
                   </div>
 
@@ -76,6 +90,7 @@ export default function Projects() {
                 </div>
 
                 {/* RIGHT IMAGE SECTION */}
+                {card.image && (
                 <div className="w-full md:w-[45%] h-[200px] md:h-auto relative">
                   <img
                     src={card.image}
@@ -83,10 +98,12 @@ export default function Projects() {
                     className=" absolute inset-0 w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-300 "
                   />
                 </div>
+                )}
               </div>
             ))}
           </div>
         </div>
+        )}
       </main>
       <Footer />
     </div>

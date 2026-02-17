@@ -1,95 +1,51 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "@/app/components/Nav";
 import Footer from "@/app/components/Footer";
 import { IoIosList } from "react-icons/io";
 import { IoGridOutline } from "react-icons/io5";
 import { X, MapPin, Clock, Calendar } from "lucide-react";
 
-const eventsData = [
-  {
-    id: 1,
-    name: "Event Name",
-    date: "Nov 1",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 2,
-    name: "Event Name",
-    date: "Nov 8",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 3,
-    name: "Event Name",
-    date: "Nov 15",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 4,
-    name: "Event Name",
-    date: "Nov 22",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 5,
-    name: "Event Name",
-    date: "Nov 29",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 6,
-    name: "Event Name",
-    date: "Dec 6",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "Support local causes while enjoying an elegant evening of entertainment, auctions, and inspiring stories from our community.",
-    url: "https://example.com/",
-  },
-];
+interface Event {
+  _id: string;
+  name: string;
+  date: string;
+  day: string;
+  time: string;
+  location: string;
+  latitude?: number;
+  longitude?: number;
+  description: string;
+  url: string;
+}
 
 export default function Events() {
   const [isGridView, setIsGridView] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [eventsData, setEventsData] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const openEventDetails = (event) => {
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch('/api/events');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        if (result.success) {
+          setEventsData(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEvents();
+  }, []);
+
+  const openEventDetails = (event: Event) => {
     setSelectedEvent(event);
   };
 
@@ -144,7 +100,13 @@ export default function Events() {
         </div>
 
         {/* Events Display */}
-        {eventsData.length === 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[200px]">
+            <p className="text-gray-400 text-lg font-mono">
+              Loading events...
+            </p>
+          </div>
+        ) : eventsData.length === 0 ? (
           <div className="flex justify-center items-center min-h-[200px]">
             <p className="text-gray-400 text-lg font-mono">
               No upcoming events
@@ -155,7 +117,7 @@ export default function Events() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-20">
               {eventsData.map((event) => (
                 <div
-                  key={event.id}
+                  key={event._id}
                   className="bg-[#0b0b0b] border border-[#2a2a2a] rounded-3xl shadow-[0_0_25px_#8249ff33] hover:shadow-[0_0_35px_#a473ff88] transition-all duration-500 hover:scale-[1.015] overflow-hidden shadow-lg max-w-sm"
                 >
                   <div className="bg-gray-900 h-48 flex items-center justify-center border-b border-gray-800">
@@ -207,7 +169,7 @@ export default function Events() {
           <div className="flex justify-center">
             <div className="space-y-6 w-full max-w-5xl px-2 sm:px-4">
               {eventsData.map((event) => (
-                <div key={event.id}>
+                <div key={event._id}>
                   <div className="flex items-center mb-4">
                     <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
                     <span className="ml-3 text-gray-300 font-mono font-medium text-sm sm:text-sm md:text-base">
@@ -349,20 +311,24 @@ export default function Events() {
                   Location on Map
                 </p>
                 <div className="w-full h-64 bg-gray-900 rounded-xl border border-gray-800 flex items-center justify-center overflow-hidden">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    frameBorder="0"
-                    style={{ border: 0 }}
-                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${
-                      selectedEvent.longitude - 0.01
-                    },${selectedEvent.latitude - 0.01},${
-                      selectedEvent.longitude + 0.01
-                    },${selectedEvent.latitude + 0.01}&layer=mapnik&marker=${
-                      selectedEvent.latitude
-                    },${selectedEvent.longitude}`}
-                    allowFullScreen
-                  ></iframe>
+                  {selectedEvent.latitude && selectedEvent.longitude ? (
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      frameBorder="0"
+                      style={{ border: 0 }}
+                      src={`https://www.openstreetmap.org/export/embed.html?bbox=${
+                        selectedEvent.longitude - 0.01
+                      },${selectedEvent.latitude - 0.01},${
+                        selectedEvent.longitude + 0.01
+                      },${selectedEvent.latitude + 0.01}&layer=mapnik&marker=${
+                        selectedEvent.latitude
+                      },${selectedEvent.longitude}`}
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <p className="text-gray-500 font-mono text-sm">Map not available</p>
+                  )}
                 </div>
               </div>
 

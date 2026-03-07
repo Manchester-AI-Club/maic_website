@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
-import MaicPolygonAnimation from "@/app/components/MaicPolygonAnimation";
+import MaicPolygonAnimation from "@/app/(public)/components/MaicPolygonAnimation";
 import { FaLinkedin, FaInstagram, FaDiscord } from "react-icons/fa";
 import { TbBrandLinktree } from "react-icons/tb";
 

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Nav from "@/app/components/Nav";
-import Footer from "@/app/components/Footer";
+import Nav from "@/app/(public)/components/Nav";
+import Footer from "@/app/(public)/components/Footer";
 import { FaGithub } from "react-icons/fa";
 
 interface Project {

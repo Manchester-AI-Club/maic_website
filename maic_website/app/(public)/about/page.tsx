@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Nav from "@/app/components/Nav";
-import Footer from "@/app/components/Footer";
+import Nav from "@/app/(public)/components/Nav";
+import Footer from "@/app/(public)/components/Footer";
 
 // Use the below calls for getting the data from the table
 

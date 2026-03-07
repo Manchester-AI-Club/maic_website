@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Nav from "@/app/components/Nav";
-import Footer from "@/app/components/Footer";
+import Nav from "@/app/(public)/components/Nav";
+import Footer from "@/app/(public)/components/Footer";
 import { IoIosList } from "react-icons/io";
 import { IoGridOutline } from "react-icons/io5";
 import { X, MapPin, Clock, Calendar } from "lucide-react";

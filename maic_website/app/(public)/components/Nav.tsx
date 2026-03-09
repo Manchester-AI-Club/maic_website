@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 
-type Announcement = {
-  id: number,
+export type Announcement = {
+  _id: string,
   title: string,
   url: string,
   url_text: string,
@@ -19,6 +19,29 @@ export default function Nav() {
   const pathname = usePathname(); // get current path
   const [isOpen, setIsOpen] = useState(false);
   const [showAnnouncements, setShowAnnouncements] = useState(false);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [loadingAnnouncements, setLoadingAnnouncements] = useState(true);
+
+  // Fetch announcements from API
+  React.useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        const response = await fetch('/api/announcements');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        if (result.success) {
+          setAnnouncements(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching announcements:', error);
+      } finally {
+        setLoadingAnnouncements(false);
+      }
+    };
+    fetchAnnouncements();
+  }, []);
 
   // Show announcements popup automatically on first visit to main page
   React.useEffect(() => {
@@ -31,35 +54,35 @@ export default function Nav() {
     }
   }, [pathname]);
 
-  const announcement_cards : Announcement[] = [
-    {
-      id: 1,
-      title: "Placeholder Announcement 1",
-      url: "https://example.com",
-      url_text: "Apply Now!",
-      priority: 1,
-      message: "Applications are now open for our new project. Click the link below to apply.",
-      createdAt: new Date()
-    },
-    {
-      id: 2,
-      title: "Placeholder Announcement 2",
-      url: "https://example.com",
-      url_text: "Buy Tickets!",
-      priority: 2,
-      message: "Tickets are now available for our upcoming event. Click the link below to purchase.",
-      createdAt: new Date(),
-    },
-    {
-      id: 3,
-      title: "Placeholder Announcement 3",
-      url: "null",
-      url_text: "null",
-      priority:1,
-      message: "Example of an announcement without a link.",
-      createdAt: new Date()
-    },
-  ];
+  // const announcement_cards : Announcement[] = [
+  //   {
+  //     id: 1,
+  //     title: "Placeholder Announcement 1",
+  //     url: "https://example.com",
+  //     url_text: "Apply Now!",
+  //     priority: 1,
+  //     message: "Applications are now open for our new project. Click the link below to apply.",
+  //     createdAt: new Date()
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Placeholder Announcement 2",
+  //     url: "https://example.com",
+  //     url_text: "Buy Tickets!",
+  //     priority: 2,
+  //     message: "Tickets are now available for our upcoming event. Click the link below to purchase.",
+  //     createdAt: new Date(),
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Placeholder Announcement 3",
+  //     url: "null",
+  //     url_text: "null",
+  //     priority:1,
+  //     message: "Example of an announcement without a link.",
+  //     createdAt: new Date()
+  //   },
+  // ];
 
   // Helper function for active link styling
   const getLinkClass = (href: string) =>
@@ -235,14 +258,18 @@ export default function Nav() {
             {/* Scrollable Body */}
             <div className="announcement-scroll overflow-y-auto px-6 md:px-8 pb-8 pt-4">
               <div className="flex flex-col gap-5">
-                {announcement_cards.length === 0 ? (
+                {loadingAnnouncements ? (
+                  <div className="text-center text-neutral-300 font-mono text-lg py-8">
+                    Loading announcements...
+                  </div>
+                ) : announcements.length === 0 ? (
                   <div className="text-center text-neutral-300 font-mono text-lg py-8">
                     No announcements to show!
                   </div>
                 ) : (
-                  announcement_cards.sort((a : Announcement,b: Announcement)=> a.priority - b.priority).map((card) => (
+                  announcements.sort((a : Announcement,b: Announcement)=> a.priority - b.priority).map((card) => (
                     <div
-                      key={card.id}
+                      key={card._id}
                       className="bg-neutral-900 border border-neutral-700/70 rounded-xl p-5 shadow-lg hover:shadow-purple-300/20 transition-all duration-300 hover:border-purple-300/40"
                     >
                       <h3 className="text-lg md:text-xl font-semibold text-white mb-2 font-mono">

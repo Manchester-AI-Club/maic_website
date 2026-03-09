@@ -7,82 +7,82 @@ import { IoGridOutline } from "react-icons/io5";
 import { X, MapPin, Clock, Calendar } from "lucide-react";
 
 const eventsData = [
-  {
-    id: 1,
-    name: "Event Name",
-    date: "Nov 1",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 2,
-    name: "Event Name",
-    date: "Nov 8",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 3,
-    name: "Event Name",
-    date: "Nov 15",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 4,
-    name: "Event Name",
-    date: "Nov 22",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 5,
-    name: "Event Name",
-    date: "Nov 29",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    description:
-      "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
-    url: "https://example.com/",
-  },
-  {
-    id: 6,
-    name: "Event Name",
-    date: "Dec 6",
-    day: "Saturday",
-    time: "5:00 PM",
-    location: "Kilburn",
-    latitude: 53.4808,
-    longitude: -2.2426,
-    description:
-      "Support local causes while enjoying an elegant evening of entertainment, auctions, and inspiring stories from our community.",
-    url: "https://example.com/",
-  },
+  // {
+  //   id: 1,
+  //   name: "Event Name",
+  //   date: "Nov 1",
+  //   day: "Saturday",
+  //   time: "5:00 PM",
+  //   location: "Kilburn",
+  //   latitude: 53.4808,
+  //   longitude: -2.2426,
+  //   description:
+  //     "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
+  //   url: "https://example.com/",
+  // },
+  // {
+  //   id: 2,
+  //   name: "Event Name",
+  //   date: "Nov 8",
+  //   day: "Saturday",
+  //   time: "5:00 PM",
+  //   location: "Kilburn",
+  //   latitude: 53.4808,
+  //   longitude: -2.2426,
+  //   description:
+  //     "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
+  //   url: "https://example.com/",
+  // },
+  // {
+  //   id: 3,
+  //   name: "Event Name",
+  //   date: "Nov 15",
+  //   day: "Saturday",
+  //   time: "5:00 PM",
+  //   location: "Kilburn",
+  //   latitude: 53.4808,
+  //   longitude: -2.2426,
+  //   description:
+  //     "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
+  //   url: "https://example.com/",
+  // },
+  // {
+  //   id: 4,
+  //   name: "Event Name",
+  //   date: "Nov 22",
+  //   day: "Saturday",
+  //   time: "5:00 PM",
+  //   location: "Kilburn",
+  //   latitude: 53.4808,
+  //   longitude: -2.2426,
+  //   description:
+  //     "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
+  //   url: "https://example.com/",
+  // },
+  // {
+  //   id: 5,
+  //   name: "Event Name",
+  //   date: "Nov 29",
+  //   day: "Saturday",
+  //   time: "5:00 PM",
+  //   location: "Kilburn",
+  //   description:
+  //     "[Event details] Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat.",
+  //   url: "https://example.com/",
+  // },
+  // {
+  //   id: 6,
+  //   name: "Event Name",
+  //   date: "Dec 6",
+  //   day: "Saturday",
+  //   time: "5:00 PM",
+  //   location: "Kilburn",
+  //   latitude: 53.4808,
+  //   longitude: -2.2426,
+  //   description:
+  //     "Support local causes while enjoying an elegant evening of entertainment, auctions, and inspiring stories from our community.",
+  //   url: "https://example.com/",
+  // },
 ];
 
 export default function Events() {
@@ -147,7 +147,7 @@ export default function Events() {
         {eventsData.length === 0 ? (
           <div className="flex justify-center items-center min-h-[200px]">
             <p className="text-gray-400 text-lg font-mono">
-              No upcoming events
+              No upcoming events, check back later!
             </p>
           </div>
         ) : isGridView ? (

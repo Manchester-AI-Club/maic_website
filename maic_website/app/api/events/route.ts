@@ -2,13 +2,15 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
+const client_db = process.env.db!;
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     
     const { client } = await connectToDatabase();
-    const db = client.db('MAIC');
+    const db = client.db(client_db);
     
     if (id) {
       // Get single event: /api/events?id=123
@@ -43,7 +45,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { client } = await connectToDatabase();
-    const db = client.db('MAIC');
+    const db = client.db(client_db);
     
     // Validate required fields
     if (!body.title || !body.date) {
@@ -81,7 +83,7 @@ export async function PUT(request: Request) {
     
     const body = await request.json();
     const { client } = await connectToDatabase();
-    const db = client.db('MAIC');
+    const db = client.db(client_db);
     
     const result = await db.collection('events').updateOne(
       { _id: new ObjectId(id) },
@@ -117,7 +119,7 @@ export async function DELETE(request: Request) {
     }
     
     const { client } = await connectToDatabase();
-    const db = client.db('MAIC');
+    const db = client.db(client_db);
     
     const result = await db.collection('events')
       .deleteOne({ _id: new ObjectId(id) });
